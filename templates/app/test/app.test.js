@@ -1,3 +1,4 @@
+<% if(flow){ %>//@flow<% } %>
 const { sum } = require('./../lib/lib');
 
 describe('Add function', () => {
@@ -5,5 +6,3 @@ describe('Add function', () => {
     expect(sum(1, 2)).toBe(3);
   });
 });
-
-

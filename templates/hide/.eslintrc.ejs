@@ -1,8 +1,8 @@
 {
   "extends": [
     "airbnb-base",
-    "eslint:recommended",
-    "plugin:flowtype/recommended"
+    "eslint:recommended"<% if(flow){ %>,
+    "plugin:flowtype/recommended"<% } %>
   ],
   "env": {
     "node": true,

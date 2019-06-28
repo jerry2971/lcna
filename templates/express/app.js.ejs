@@ -1,14 +1,8 @@
-<% if (flow) { -%>
-// @flow
-
-<% } -%>
-// public module
 let express = require('express');
 let path = require('path');
 let cookieParser = require('cookie-parser');
-<% if (winston) { -%>
 let morgan = require('morgan');
-<% } -%>
+
 let queue = require('express-queue');
 let helmet = require('helmet');
 
@@ -26,10 +20,10 @@ app.use(queue({ activeLimit: 5, queuedLimit: -1 }));
 
 // security header
 app.use(helmet({frameguard:false}));
-<% if (winston) { -%>
-// winston log
-app.use(morgan('combined', { stream: winston.stream }));
-<% } -%>
+
+// log
+app.use(morgan('combined'<% if (winston) { -%>, { stream: winston.stream }<% } -%>));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
@@ -55,7 +49,6 @@ app.all('/api/*',(req, res, next) => {
 });
 <% } -%>
 // api routers
-// app.use('/', require('./routes/index'));
 app.use('/api/api', require('./routes/api'));
 
 // error handler
@@ -63,14 +56,12 @@ app.use((err, req, res, next) => {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-  // add this line to include winston logging
+<% if(winston){%>// add this line to include winston logging
   winston.error();
-
+<% } %>
   // render the error page
   res.status(err.status || 500);
   res.render('error');
-  next(err);
 });
 
 module.exports = app;

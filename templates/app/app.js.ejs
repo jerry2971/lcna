@@ -1,7 +1,8 @@
-const winston = require('./lib/winston');
+<% if(flow){ %>//@flow<% } %><% if(winston){ %>
+const winston = require('./lib/winston');<% } %>
 const { sum } = require('./lib/lib');
 
-const TITLE = 'APP_MSG';
-
-winston.log('info', {title: TITLE, msg: 'sum', result: sum(3,2)}); 
+const TITLE<% if(flow){ %>: string<% } %> = 'APP_MSG';
+<% if(winston){ %>
+winston.log('info', {title: TITLE, msg: 'sum', result: sum(3,2)});<% } %>
 console.log(sum(3,2));

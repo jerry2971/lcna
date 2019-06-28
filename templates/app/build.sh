@@ -9,4 +9,3 @@ node_modules/.bin/babel ec_modules -d build/ec_modules
 
 cd build
 npm install --production
-

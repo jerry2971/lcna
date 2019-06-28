@@ -13,4 +13,3 @@ node_modules/.bin/babel public -d build/public
 
 cd build
 npm install --production
-

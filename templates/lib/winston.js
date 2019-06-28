@@ -9,7 +9,7 @@ log_config.rollbar_option.rollbarConfig.payload={'fingerprint':'main_info'};
 // instantiate a new Winston Logger with the settings defined above
 let option =[new winston.transports.File(log_config.winston_options.file_app),
              new winston.transports.Console(log_config.winston_options.console)];
-//             new Rollbar(log_config.rollbar_option
+//             new Rollbar(log_config.rollbar_option  // if you want add log remote
 
 let logger = winston.createLogger({
   transports:option,

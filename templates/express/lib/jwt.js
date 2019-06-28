@@ -14,11 +14,12 @@ const jwtVerify = ( token, callback ) =>{
   /***************************
   (err, decoded) => {
     if(err){
+      console.log(err.name + ':' + err.message);
       winston.log('info', {title: TITLE, msg: err.name + ':' + err.message});
       res.status(400).json({msg: err.message});
     }
-    winston.log('debug', {title: TITLE, msg: decoded});
     console.log(decoded);
+    winston.log('debug', {title: TITLE, msg: decoded});
   }
   ****************************/
 };
