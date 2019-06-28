@@ -85,10 +85,9 @@ inquirer.prompt(questions).then(function (answers){
 		versions(devDepen).then(function(devDepenJson){
 			option.depen = depenJson;
 			option.devDepen = devDepenJson;
-			console.log(option);
 			mkdir(homeDir,'');
 			var sourcePath = path.join(__dirname, '..', 'templates', answers.usage);
-			var targetPath = path.join(__dirname, '..',homeDir);
+			var targetPath = path.join(process.cwd(), homeDir);
 			var configPath = path.join(targetPath, 'config');
 			var libPath = path.join(targetPath, 'lib');
 
