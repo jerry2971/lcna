@@ -1,12 +1,11 @@
 {
-  "name": "myapp",
+  "name": "lcna",
   "version": "1.0.0",
   "description": "little create node app(lcna)",
   "bin": {
     "lcna": "./bin/lcna.js"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "jerrychen2971@gmail.com",
