@@ -1,0 +1,24 @@
+{
+  "name": "<%=name%>",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "babel-node ./bin/www",
+    "pro_start": "node ./bin/www",
+    "test": "jest --coverage",
+    "build": "./build.sh",<% if(flow){ %>
+    "flow": "flow",<% } %>
+    "lint": "eslint",
+    "eslint": "eslint . --ignore-pattern winston.js<% if(flow){ %> --ignore-pattern flow-typed<% } %>"
+  },
+  "dependencies": {<% for(var i = 0; i < depen.length; ++i) {%>
+    "<%=depen[i].pkg%>":"^<%=depen[i].version%>"<% if(i<depen.length-1){ %>,<% } %><% } %>
+  },
+  "devDependencies": {<% for(var i = 0; i < devDepen.length; ++i) {%>
+    "<%=devDepen[i].pkg%>":"^<%=devDepen[i].version%>"<% if(i<devDepen.length-1){ %>,<% } %><% } %>
+  },
+  "babel": {
+    "presets": [<% if(flow){ %>
+      "@babel/preset-flow"
+    <% } %>]
+  }
+}

@@ -1,0 +1,86 @@
+image: ec_img
+
+stages:
+  - build
+  - check
+  - test
+  - deploy
+
+build:
+  stage: build
+  before_script:
+    - npm i
+  script:
+    - npm run build
+  allow_failure: true
+  only:
+    - master
+  tags:
+    - ec_runner18_2
+
+audit:
+  stage: check
+  allow_failure: true
+  script:
+    - npm audit
+  tags:
+    - ec_runner18_2
+
+flow:
+  stage: check
+  allow_failure: true
+  before_script:
+    - npm i
+    - npm  i --save-dev flow-typed
+    - ./node_modules/.bin/flow-typed install jest
+  script:
+    - npm run flow
+  tags:
+    - ec_runner18_2
+
+lint:
+  stage: check
+  allow_failure: true
+  before_script:
+    - npm i
+  script:
+    - npm run eslint
+  tags:
+    - ec_runner18_2
+
+# 靜態代碼分析
+static_analysis:
+  stage: check
+  allow_failure: true
+  script:
+    - pwd
+    - cd ..
+    - virtualenv venv -p python3
+    - source venv/bin/activate
+    - pip install nodejsscan
+    - cd $CI_PROJECT_NAME
+    - nodejsscan -d ./../$CI_PROJECT_NAME/
+    - deactivate
+    - echo Already use npm helmet protect http header. 
+    - echo Ignore missing_sec_header report if count less 7.
+  tags:
+    - ec_runner18_2
+
+unit_test:
+  stage: test
+  before_script:
+    - npm i
+  script:
+    - npm run test
+  tags:
+    - ec_runner18_2
+
+# 部署
+deploy:
+  stage: deploy
+  script:
+    - echo OK!
+  tags:
+    - ec_runner18_2
+
+

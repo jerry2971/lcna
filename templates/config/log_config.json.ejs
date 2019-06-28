@@ -1,0 +1,27 @@
+{
+  "winston_options":{
+    "file_app": {
+      "level": "info",
+      "filename": "logs/app.log",
+      "handleExceptions": true,
+      "json": true,
+      "maxsize": 5242880,
+      "maxFiles": 5,
+      "colorize": false
+    },
+    "console": {
+      "level": "info",
+      "handleExceptions": true,
+      "json": false,
+      "colorize": true
+    }
+  },
+  "rollbar_option":{
+    "level": "error",
+    "rollbarConfig":{
+      "enabled": false,
+      "accessToken":"ReplaceYourToken"
+    }
+  }
+}
+

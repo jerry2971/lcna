@@ -1,0 +1,7 @@
+const winston = require('./lib/winston');
+const { sum } = require('./lib/lib');
+
+const TITLE = 'APP_MSG';
+
+winston.log('info', {title: TITLE, msg: 'sum', result: sum(3,2)}); 
+console.log(sum(3,2));

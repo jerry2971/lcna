@@ -1,0 +1,76 @@
+<% if (flow) { -%>
+// @flow
+
+<% } -%>
+// public module
+let express = require('express');
+let path = require('path');
+let cookieParser = require('cookie-parser');
+<% if (winston) { -%>
+let morgan = require('morgan');
+<% } -%>
+let queue = require('express-queue');
+let helmet = require('helmet');
+
+let app = express();
+<% if (jwt) { -%>
+let { jwtVerify } = require('./lib/jwt');
+<% } -%>
+<% if (winston) { -%>
+let winston = require('./lib/winston');
+const TITLE = 'APP_MSG';
+<% } -%>
+
+// queue
+app.use(queue({ activeLimit: 5, queuedLimit: -1 }));
+
+// security header
+app.use(helmet({frameguard:false}));
+<% if (winston) { -%>
+// winston log
+app.use(morgan('combined', { stream: winston.stream }));
+<% } -%>
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
+
+// public file
+app.use(express.static(path.join(__dirname, 'public')));
+<% if (jwt) { -%>
+// jwt server
+app.use('/jwt', require('./routes/jwt'));
+
+// check jwt request
+app.all('/api/*',(req, res, next) => {
+  jwtVerify(req.body.token, (err, decoded) => {
+    if(err){
+      winston.log('info', {title: TITLE, msg: err.name + ':' + err.message});
+      res.status(400).json({msg: err.message});
+      return;
+    }
+    winston.log('debug', {title: TITLE, msg: decoded});
+    req.body = decoded;
+    next();
+  });
+});
+<% } -%>
+// api routers
+// app.use('/', require('./routes/index'));
+app.use('/api/api', require('./routes/api'));
+
+// error handler
+app.use((err, req, res, next) => {
+  // set locals, only providing error in development
+  res.locals.message = err.message;
+  res.locals.error = req.app.get('env') === 'development' ? err : {};
+
+  // add this line to include winston logging
+  winston.error();
+
+  // render the error page
+  res.status(err.status || 500);
+  res.render('error');
+  next(err);
+});
+
+module.exports = app;
