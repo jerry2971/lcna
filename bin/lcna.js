@@ -69,14 +69,14 @@ inquirer.prompt(questions).then(function (answers){
 			break;
 		case 'express':
 			depen = [ "cookie-parser","debug","express",
-				"express-queue","helmet"];
+				"express-queue","helmet","morgan"];
 			devDepen = [ "@babel/cli","@babel/core","@babel/node",
 				"babel-eslint","eslint","eslint-config-airbnb-base",
 				"eslint-plugin-import","eslint-plugin-react","jest","supertest" ];
 
 			option.flow && (devDepen = devDepen.concat(["@babel/preset-flow","eslint-plugin-flowtype","flow-bin"]));
 			option.jwt && depen.push('jsonwebtoken');
-			option.winston && (depen = depen.concat(["morgan","winston","winston-transport-rollbar-3"]));
+			option.winston && (depen = depen.concat(["winston","winston-transport-rollbar-3"]));
 
 			break;
 	}

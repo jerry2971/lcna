@@ -1,5 +1,5 @@
 {
-  "winston_options":{
+  "winston_options": {
     "file_app": {
       "level": "info",
       "filename": "logs/app.log",
@@ -16,11 +16,14 @@
       "colorize": true
     }
   },
-  "rollbar_option":{
+  "rollbar_option": {
     "level": "error",
-    "rollbarConfig":{
+    "rollbarConfig": {
       "enabled": false,
-      "accessToken":"ReplaceYourToken"
+      "accessToken": "ReplaceYourToken",
+      "payload": {
+        "fingerprint": "main_info"
+      }
     }
   }
 }

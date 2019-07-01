@@ -1,25 +1,26 @@
-var winston = require('winston');
-var fs = require('fs');
+const winston = require('winston');
+const fs = require('fs');
 
-let log_config =JSON.parse(fs.readFileSync('./config/log_config.json', 'utf8'));
-// let Rollbar = require('winston-transport-rollbar-3');
-
-log_config.rollbar_option.rollbarConfig.payload={'fingerprint':'main_info'};
+const LOG_CONFIG = JSON.parse(fs.readFileSync('./config/log_config.json', 'utf8'));
+// const Rollbar = require('winston-transport-rollbar-3'); // if you want add log repository
 
 // instantiate a new Winston Logger with the settings defined above
-let option =[new winston.transports.File(log_config.winston_options.file_app),
-             new winston.transports.Console(log_config.winston_options.console)];
-//             new Rollbar(log_config.rollbar_option  // if you want add log remote
+const option = [
+  new winston.transports.File(LOG_CONFIG.winston_options.file_app),
+  new winston.transports.Console(LOG_CONFIG.winston_options.console)
+];
+// new Rollbar(LOG_CONFIG.rollbar_option  // if you want add log repository
 
-let logger = winston.createLogger({
-  transports:option,
+const logger = winston.createLogger({
+  transports: option,
   exitOnError: false // do not exit on handled exceptions
 });
 
 // create a stream object with a 'write' function that will be used by 'morgan'
 logger.stream = {
-  write: function(message, encoding) {
-    // use the 'info' log level so the output will be picked up by both transports (file and console)
+  write(message, encoding) {
+    // use the 'info' log level so the output will be picked up
+    // by both transports (file and console)
     logger.info(message);
   }
 };

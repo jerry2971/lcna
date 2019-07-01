@@ -5,13 +5,13 @@ const option = {
   expiresIn: '1h' // '60ms', '2 days', '10h', '7d'
 };
 
-const jwtSign = ( body) =>{
+const jwtSign = (body) => {
   return jwt.sign(body, SECRET, option);
 };
 
-const jwtVerify = ( token, callback ) =>{
+const jwtVerify = (token, callback) => {
   jwt.verify(token, SECRET, callback);
-  /***************************
+  /* **************************
   (err, decoded) => {
     if(err){
       console.log(err.name + ':' + err.message);
@@ -21,10 +21,10 @@ const jwtVerify = ( token, callback ) =>{
     console.log(decoded);
     winston.log('debug', {title: TITLE, msg: decoded});
   }
-  ****************************/
+  *************************** */
 };
 
-module.exports ={
+module.exports = {
   jwtSign,
   jwtVerify
 };

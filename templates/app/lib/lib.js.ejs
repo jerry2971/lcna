@@ -1,8 +1,8 @@
-<% if(flow){ %>//@flow<% } %>
-function sum (a<% if(flow){ %>: number<% } %>, b<% if(flow){ %>: number<% } %>)<% if(flow){ %>: number<% } %>{
-  return a+b;
-};
+<% if(flow){ %>// @flow<% } %>
+function sum(a<% if(flow){ %>: number<% } %>, b<% if(flow){ %>: number<% } %>)<% if(flow){ %>: number<% } %> {
+  return a + b;
+}
 
-module.exports ={
+module.exports = {
   sum
 };
