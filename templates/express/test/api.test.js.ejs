@@ -1,14 +1,14 @@
-// @flow
-const request = require('supertest');
+<% if(flow){ %>// @flow
+<% } %>const request = require('supertest');
 const app = require('./../app');
-const { jwtSign, jwtVerify} = require('./../lib/jwt');
-
+<% if(jwt){ %>const { jwtSign, jwtVerify} = require('./../lib/jwt');
+<% } %>
 const Input = {
   user: 'user',
   phone: 123
 };
-const TOKEN = jwtSign(Input);
-
+<% if(jwt){ %>const TOKEN = jwtSign(Input);
+<% } %>
 // ============ Test public file request ============
 describe('Test public file request', () => {
   test('It should response GET method', () => {
@@ -27,7 +27,7 @@ describe('Test public file request', () => {
     });
   });
 });
-
+<% if(jwt){ %>
 // ============== Test jwt sign request =============
 describe('Test jwt sign request', () => {
   test('It should response the POST method', (done) => {
@@ -41,20 +41,20 @@ describe('Test jwt sign request', () => {
     });
   });
 });
-
+<% } %>
 // ================ Test api request ================
 describe('Test api request', () => {
   test('It should response the GET method', () => {
-    return request(app).get('/api/api').send({token: TOKEN}).then(response => {
+    return request(app).get('/api/api').send(<% if(jwt){ %>{ token: TOKEN }<% }else{ %>Input<% } %>).then(response => {
       expect(response.statusCode).toBe(200);
     });
   });
   test('It should response 404', () => {
-    return request(app).post('/api/api').send({token: TOKEN}).then(response => {
+    return request(app).post('/api/api').send(<% if(jwt){ %>{ token: TOKEN }<% }else{ %>Input<% } %>).then(response => {
       expect(response.statusCode).toBe(404);
     });
   });
-  test('Jwt must be provided', () => {
+<% if(jwt){ %>  test('Jwt must be provided', () => {
     return request(app).get('/api/api').then(response => {
       expect(response.statusCode).toBe(400);
     });
@@ -64,6 +64,4 @@ describe('Test api request', () => {
       expect(response.statusCode).toBe(400);
     });
   });
-});
-
-
+<% } %>});

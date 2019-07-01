@@ -1,6 +1,6 @@
 {
   "name": "lcna",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "little create node app(lcna)",
   "bin": {
     "lcna": "./bin/lcna.js"
