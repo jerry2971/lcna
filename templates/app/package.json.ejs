@@ -2,13 +2,13 @@
   "name": "<%=name%>",
   "version": "1.0.0",
   "scripts": {
-    "start": "babel-node ./bin/www",
-    "pro_start": "node ./bin/www",
+    "start": "babel-node app.js",
+    "pro_start": "node app.js",
     "test": "jest --coverage",
     "build": "./build.sh",<% if(flow){ %>
     "flow": "flow",<% } %>
     "lint": "eslint",
-    "eslint": "eslint . --ignore-pattern winston.js<% if(flow){ %> --ignore-pattern flow-typed<% } %>"
+    "eslint": "eslint . --ignore-pattern build<% if(winston){ %> --ignore-pattern winston.js<% }%><% if(flow){ %> --ignore-pattern flow-typed<% } %>"
   },
   "dependencies": {<% for(var i = 0; i < depen.length; ++i) {%>
     "<%=depen[i].pkg%>":"^<%=depen[i].version%>"<% if(i<depen.length-1){ %>,<% } %><% } %>
