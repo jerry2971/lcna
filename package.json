@@ -5,7 +5,7 @@
   "bin": {
     "lcna": "./bin/lcna.js"
   },
-  "homepage":"https://github.com/jerry2971/lcna",
+  "homepage": "https://github.com/jerry2971/lcna",
   "repository": {
     "type": "git",
     "url": "https://github.com/jerry2971/lcna"
@@ -19,7 +19,6 @@
     "generator"
   ],
   "scripts": {},
-  "keywords": [],
   "author": "jerrychen2971@gmail.com",
   "license": "MIT",
   "dependencies": {

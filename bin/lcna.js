@@ -1,83 +1,125 @@
 #!/usr/bin/env node
-var latestVersion = require('latest-version');
-var program = require('commander');
-var inquirer = require('inquirer');
-var fs = require('fs');
-var mkdirp = require('mkdirp');
-var ejs = require('ejs');
-var path = require('path');
-var MODE_0666 = parseInt('0666', 8);
-var MODE_0755 = parseInt('0755', 8);
+const ejs = require('ejs');
+const fs = require('fs');
+const inquirer = require('inquirer');
+const latestVersion = require('latest-version');
+const mkdirp = require('mkdirp');
+const path = require('path');
 
-var VERSION = require('../package').version;
+const MODE_0666 = parseInt('0666', 8);
+const MODE_0755 = parseInt('0755', 8);
 
-/* 
-program
-	.version(VERSION, '-v, --version')
-	.arguments('<dir>')
-	.option('-f, --flow', 'add flow')
-	.option('-w, --winston', 'add winston log')
-	.action((dir, cmd) => 
-	{
-		console.log(dir, cmd);
-	})
-program.parse(process.argv);
-
-console.log('down');
-*/
-
-
-const questions = [{
-    type: 'input',
-    name: 'name',
-    message: 'ProjectName',
-    default: 'myapp',
-},{
-    type: 'list',
-    name: 'usage',
-    message: 'Usage',
-    choices:['app','express'],
-},{
-    type: 'checkbox',
-    name: 'tool',
-    message: 'Tool',
-    choices:['flow','winston','jwt'],
-}]
-
-inquirer.prompt(questions).then(function (answers){
-	var homeDir = answers.name;
-	var depen = [];
-	var devDepen = [];
-	var option = {
+const dependence = {
+	flow: {
+		depen: [],
+		devDepen: ['@babel/preset-flow', 'eslint-plugin-flowtype', 'flow-bin'],
+		file: ['.flowconfig']
+	},
+	eslint: {
+		depen: [],
+		devDepen: [
+			'babel-eslint',
+			'eslint',
+			'eslint-config-airbnb-base',
+			'eslint-plugin-import',
+			'eslint-plugin-react'
+		],
+		file: ['.eslintrc']
+	},
+	winston: {
+		depen: ['winston'],
+		devDepen: [],
+		file: ['winston.js', 'log.json']
+	},
+	rollbar: {
+		depen: ['winston-transport-rollbar-3'],
+		devDepen: [],
+		file: []
+	},
+	jwt: {
+		depen: ['jsonwebtoken'],
+		devDepen: [],
+		file: ['jwt.js']
+	},
+	ci: {
 		depen: [],
 		devDepen: [],
-		name: homeDir,
-		flow: answers.tool.includes('flow'),
-		winston: answers.tool.includes('winston'),
-		jwt: answers.tool.includes('jwt')
+		file: ['.gitlab-ci.yml']
 	}
+};
 
-	switch(answers.usage){
-		case 'app':
-			depen = [];
-			devDepen = [ "@babel/cli","@babel/core","@babel/node",
-			"babel-eslint","eslint","eslint-config-airbnb-base",
-			"eslint-plugin-import","eslint-plugin-react","jest" ];
+const questions = [{
+	type: 'input',
+	name: 'name',
+	message: 'Project Name',
+	default: 'myapp'
+},{
+	type: 'list',
+	name: 'usage',
+	message: 'Template Usage',
+	choices:['app', 'express', 'web']
+},{
+	type: 'checkbox',
+	name: 'tool',
+	message: 'Tool',
+	choices:['flow', 'eslint']
+},{
+	type: 'checkbox',
+	name: 'log',
+	message: 'Log',
+	choices:['winston', 'winston+rollbar']
+},{
+	type: 'checkbox',
+	name: 'ci',
+	message: 'CI',
+	choices:['.gitlab-ci']
+}];
 
-			option.flow && (devDepen = devDepen.concat(["@babel/preset-flow","eslint-plugin-flowtype","flow-bin"]));
-			option.winston && (depen = depen.concat(["winston","winston-transport-rollbar-3"]));
-			break;
+inquirer.prompt(questions).then((answers) => {
+	if (answers.usage !== 'app') {
+		const questions2 = [{
+			type: 'confirm',
+			name: 'sRequest',
+			message: 'JSON Web Token (JWT)'
+		}];
+		inquirer.prompt(questions2).then((answers2) => {
+			main(Object.assign({}, answers, answers2));
+		});
+	} else {
+		main(answers)
+	}
+});
+
+const main = (args) => {
+	const depen = [];
+	const devDepen = ["@babel/cli", "@babel/core", "@babel/node", "jest"];
+	const homeDir = args.name;
+	const option = {
+		name: homeDir,
+		flow: args.tool.includes('flow'),
+		eslint: args.tool.includes('eslint'),
+		winston: args.log.includes('winston') || args.log.includes('winston+rollbar'),
+		rollbar: args.log.includes('winston+rollbar'),
+		ci: args.ci.includes('.gitlab-ci'),
+		jwt: !!args.sRequest
+	}
+	console.log(option);
+	Object.keys(dependence).forEach((key) => {
+		if (option[key]) {
+			console.log('key=', key);
+			depen.concat(dependence[key].depen);
+			devDepen.concat(dependence[key].devDepen);
+		}
+	});
+
+	switch (args.usage) {
+		case 'web':
+			depen.concat([]);
+			devDepen.push();
+			// break; // it contain express module.
 		case 'express':
-			depen = [ "cookie-parser","debug","express",
-				"express-queue","helmet","morgan"];
-			devDepen = [ "@babel/cli","@babel/core","@babel/node",
-				"babel-eslint","eslint","eslint-config-airbnb-base",
-				"eslint-plugin-import","eslint-plugin-react","jest","supertest" ];
-
-			option.flow && (devDepen = devDepen.concat(["@babel/preset-flow","eslint-plugin-flowtype","flow-bin"]));
-			option.jwt && depen.push('jsonwebtoken');
-			option.winston && (depen = depen.concat(["winston","winston-transport-rollbar-3"]));
-
+			depen.concat([ "cookie-parser", "debug", "express", "express-queue", "helmet", "morgan"]);
+			devDepen.push('supertest');
 			break;
 	}
 
@@ -86,10 +128,10 @@ inquirer.prompt(questions).then(function (answers){
 			option.depen = depenJson;
 			option.devDepen = devDepenJson;
 			mkdir(homeDir,'');
-			var sourcePath = path.join(__dirname, '..', 'templates', answers.usage);
-			var targetPath = path.join(process.cwd(), homeDir);
-			var configPath = path.join(targetPath, 'config');
-			var libPath = path.join(targetPath, 'lib');
+			const sourcePath = path.join(__dirname, '..', 'templates', args.usage);
+			const targetPath = path.join(process.cwd(), homeDir);
+			const configPath = path.join(targetPath, 'config');
+			const libPath = path.join(targetPath, 'lib');
 
 			copyFolder(sourcePath, targetPath, option);
 			mkdir(configPath,'');
@@ -99,8 +141,7 @@ inquirer.prompt(questions).then(function (answers){
 			copyFolder(path.join(sourcePath, '..','hide'), targetPath, option);
 		});
 	});
-})
-
+};
 
 function mkdir (base, dir) {
 	var loc = path.join(base, dir)
@@ -113,6 +154,17 @@ function write (file, str, mode) {
 	console.log('   \x1b[36mcreate\x1b[0m : ' + file)
 }
 
+function copyCheck(targetItem, option) {
+	let result = true;
+	Object.keys(dependence).forEach((key) => {
+		if (option[key] === false && dependence[key].file.length > 0 && dependence[key].file.every((f) => { return targetItem.includes(f); })) {
+			console.log('key:', key, 'targetItem', targetItem);
+			console.log('reject file:', targetItem);
+			result = false;
+		}
+	});
+	return result;
+}
 
 function copyFolder(source, target, option){
 	fs.readdirSync(source).forEach(function(item){
@@ -124,7 +176,9 @@ function copyFolder(source, target, option){
 			if(sourceItem.indexOf('.ejs') !== -1){
 				file = ejs.compile(file)(option);
 			}
-			write(targetItem.replace('.ejs', ''), file, targetItem.includes('build.sh')? MODE_0755 : MODE_0666);
+			if (copyCheck(targetItem, option)) {
+				write(targetItem.replace('.ejs', ''), file, targetItem.includes('build.sh')? MODE_0755 : MODE_0666);
+			}
 		}else{
 			mkdir(targetItem,'');
 			copyFolder(sourceItem, targetItem, option);
@@ -137,12 +191,3 @@ async function versions(array) {
 		return {pkg:a,version:(await latestVersion(a))};
 	}));
 }
-
-
-
-
-
-
-
-
-

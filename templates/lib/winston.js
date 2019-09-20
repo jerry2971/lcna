@@ -1,7 +1,7 @@
 const winston = require('winston');
 const fs = require('fs');
 
-const LOG_CONFIG = JSON.parse(fs.readFileSync('./config/log_config.json', 'utf8'));
+const LOG_CONFIG = JSON.parse(fs.readFileSync('./config/log.json', 'utf8'));
 // const Rollbar = require('winston-transport-rollbar-3'); // if you want add log repository
 
 // instantiate a new Winston Logger with the settings defined above
