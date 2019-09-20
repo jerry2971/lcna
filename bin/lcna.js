@@ -119,7 +119,7 @@ const main = (args) => {
 			// break; // it contain express module.
 		case 'express':
 			depen = depen.concat([ "cookie-parser", "debug", "express", "express-queue", "helmet", "morgan"]);
-			devDepen = devDepen.push('supertest');
+			devDepen.push('supertest');
 			break;
 	}
 
@@ -157,7 +157,7 @@ function write (file, str, mode) {
 function copyCheck(targetItem, option) {
 	let result = true;
 	Object.keys(dependence).forEach((key) => {
-		if (option[key] === false && dependence[key].file.length > 0 && dependence[key].file.every((f) => { return targetItem.includes(f); })) {
+		if (option[key] === false && dependence[key].file.some((f) => { return targetItem.includes(f); })) {
 			console.log('key:', key, 'targetItem', targetItem);
 			console.log('reject file:', targetItem);
 			result = false;

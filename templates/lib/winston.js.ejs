@@ -1,8 +1,8 @@
 <% if(flow){ %>// @flow
 <% } %>const winston = require('winston');
-const { combine, timestamp, json } = winston.format;
 const fs = require('fs');
 
+const { combine, timestamp, json } = winston.format;
 const LOG_CONFIG = JSON.parse(fs.readFileSync('./config/log.json', 'utf8'));
 <% if(rollbar){ %>const Rollbar = require('winston-transport-rollbar-3');
 <% } %>

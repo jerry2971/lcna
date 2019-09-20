@@ -6,11 +6,11 @@ const option = {
   expiresIn: '1h' // '60ms', '2 days', '10h', '7d'
 };
 
-const jwtSign = (body) => {
+const jwtSign = (body<% if(flow){ %>: any<% } %>) => {
   return jwt.sign(body, SECRET, option);
 };
 
-const jwtVerify = (token, callback) => {
+const jwtVerify = (token<% if(flow){ %>: string<% } %>, callback<% if(flow){ %>: Function<% } %>) => {
   jwt.verify(token, SECRET, callback);
   /* **************************
   (err, decoded) => {
