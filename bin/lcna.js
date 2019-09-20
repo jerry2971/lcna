@@ -107,8 +107,8 @@ const main = (args) => {
 	Object.keys(dependence).forEach((key) => {
 		if (option[key]) {
 			console.log('key=', key);
-			depen.concat(dependence[key].depen);
-			devDepen.concat(dependence[key].devDepen);
+			depen = depen.concat(dependence[key].depen);
+			devDepen = devDepen.concat(dependence[key].devDepen);
 		}
 	});
 
@@ -118,8 +118,8 @@ const main = (args) => {
 			devDepen.push();
 			// break; // it contain express module.
 		case 'express':
-			depen.concat([ "cookie-parser", "debug", "express", "express-queue", "helmet", "morgan"]);
-			devDepen.push('supertest');
+			depen = depen.concat([ "cookie-parser", "debug", "express", "express-queue", "helmet", "morgan"]);
+			devDepen = devDepen.push('supertest');
 			break;
 	}
 

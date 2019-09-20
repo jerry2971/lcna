@@ -80,6 +80,8 @@ deploy:
   stage: deploy
   script:
     - echo OK!
+  only:
+    - master
   tags:
     - ec_runner18_2
 

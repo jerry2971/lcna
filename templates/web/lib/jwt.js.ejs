@@ -1,6 +1,7 @@
-const jwt = require('jsonwebtoken');
+<% if(flow){ %>// @flow
+<% } %>const jwt = require('jsonwebtoken');
 
-const SECRET = 'SECRET';
+const SECRET<% if(flow){ %>: string<% } %> = 'SECRET';
 const option = {
   expiresIn: '1h' // '60ms', '2 days', '10h', '7d'
 };

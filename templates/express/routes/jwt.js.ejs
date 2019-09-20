@@ -1,4 +1,5 @@
-const express = require('express');
+<% if(flow){ %>// @flow
+<% } %>const express = require('express');
 <% if(winston){ %>const winston = require('./../lib/winston');
 <% } %>const { jwtSign } = require('./../lib/jwt');
 
