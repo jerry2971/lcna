@@ -12,3 +12,4 @@ npm install --production
 
 sed -i -e '/babel-node app.js/d' package.json
 sed -i -e 's/pro_start/start/g' package.json
+rm package.json-e
