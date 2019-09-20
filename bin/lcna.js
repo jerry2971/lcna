@@ -91,8 +91,8 @@ inquirer.prompt(questions).then((answers) => {
 });
 
 const main = (args) => {
-	const depen = [];
-	const devDepen = ["@babel/cli", "@babel/core", "@babel/node", "jest"];
+	let depen = [];
+	let devDepen = ["@babel/cli", "@babel/core", "@babel/node", "jest"];
 	const homeDir = args.name;
 	const option = {
 		name: homeDir,
