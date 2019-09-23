@@ -1,0 +1,71 @@
+<% if(flow){ %>// @flow
+<% } %>// ============= modules =============
+import React from 'react';
+<% if(flow){ %>import PropTypes from 'prop-types';
+<% } %>import { withStyles } from '@material-ui/core/styles';
+import { injectIntl, FormattedMessage } from 'react-intl';
+// ============ component ============
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
+// ============== icon ===============
+
+// =========== personalize ===========
+import styles from './styles';
+import <% if(jwt){ %>{ jwtRequest }<% } else { %>{ httpRequest }<% } %> from './lib';
+// ============ variable =============
+<% if(flow){ %>
+type Props = {
+  intl: any,
+  classes : any
+};
+
+type State = {
+  value: string
+};
+<% } %>
+class Home extends React.Component<% if(flow){ %><Props, State><% } %> {
+  state = {
+    value: ''
+  }
+  // ============= function =============
+  formatLanguage = (obj, formate) => {
+    const { intl } = this.props;
+    return intl.formatMessage(obj, formate);
+  }
+  // ============== event ===============
+  onSubmit = (event) => {
+    <% if(jwt){ %>jwtRequest<% } else { %>httpRequest<% } %>('GET', 'api/api', {}, (stateCode, resJson) => {
+      const { value } = resJson;
+      this.setState({ value });
+    });
+  }
+  render() {
+    const { classes } = this.props;
+    return (
+      <div>
+        <TextField
+          id='textField'
+          label={this.formatLanguage({ id: 'helloWorld' })}
+          value={this.state.value}
+          margin='dense'
+          className={classes.field}
+          style={{ width: '100%' }}
+        />
+        <Button
+          id='button'
+          onClick={this.onSubmit}
+          className={classes.button}
+          style={{ width: '100%' }}
+        >
+          <FormattedMessage id='onSubmit' />
+        </Button>
+      </div>
+    );
+  }
+}
+<% if(flow){ %>
+Home.propTypes = {
+  classes: PropTypes.object.isRequired
+};
+<% } %>
+export default injectIntl(withStyles(styles)(Home));

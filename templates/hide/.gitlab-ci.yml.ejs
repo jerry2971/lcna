@@ -1,4 +1,4 @@
-image: ec_img
+image: $IMAGE
 
 stages:
   - build
@@ -16,7 +16,7 @@ build:
   only:
     - master
   tags:
-    - ec_runner18_2
+    - $RUNNER_TAG
 
 audit:
   stage: check
@@ -24,8 +24,8 @@ audit:
   script:
     - npm audit
   tags:
-    - ec_runner18_2
-
+    - $RUNNER_TAG
+<% if(flow){ %>
 flow:
   stage: check
   allow_failure: true
@@ -36,8 +36,8 @@ flow:
   script:
     - npm run flow
   tags:
-    - ec_runner18_2
-
+    - $RUNNER_TAG
+<% } %><% if(eslint){ %>
 lint:
   stage: check
   allow_failure: true
@@ -46,8 +46,8 @@ lint:
   script:
     - npm run eslint
   tags:
-    - ec_runner18_2
-
+    - $RUNNER_TAG
+<% } %>
 # 靜態代碼分析
 static_analysis:
   stage: check
@@ -64,7 +64,7 @@ static_analysis:
     - echo Already use npm helmet protect http header. 
     - echo Ignore missing_sec_header report if count less 7.
   tags:
-    - ec_runner18_2
+    - $RUNNER_TAG
 
 unit_test:
   stage: test
@@ -73,7 +73,7 @@ unit_test:
   script:
     - npm run test
   tags:
-    - ec_runner18_2
+    - $RUNNER_TAG
 
 # 部署
 deploy:
@@ -83,6 +83,4 @@ deploy:
   only:
     - master
   tags:
-    - ec_runner18_2
-
-
+    - $RUNNER_TAG

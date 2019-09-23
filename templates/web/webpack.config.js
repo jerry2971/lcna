@@ -42,10 +42,6 @@ module.exports = {
     ]
   },
   plugins: [
-    new CleanWebpackPlugin(cleanOption),
-    new webpack.ProvidePlugin({
-      Promise: 'es6-promise',
-      fetch: 'exports-loader?self.fetch!whatwg-fetch/dist/fetch.umd'
-    })
+    new CleanWebpackPlugin(cleanOption)
   ]
 };

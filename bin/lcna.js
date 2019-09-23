@@ -114,8 +114,20 @@ const main = (args) => {
 
 	switch (args.usage) {
 		case 'web':
-			depen.concat([]);
-			devDepen.push();
+			// depen.concat([]);
+			devDepen = devDepen.concat([
+				'webpack',
+				'webpack-cli',
+				'babel-loader',
+				'@babel/preset-react',
+				'@babel/preset-env',
+				'clean-webpack-plugin',
+				'@babel/plugin-proposal-class-properties',
+				'@material-ui/core',
+				'react-dom',
+				'exports-loader',
+				'react-intl',
+			]);
 			// break; // it contain express module.
 		case 'express':
 			depen = depen.concat([ "cookie-parser", "debug", "express", "express-queue", "helmet", "morgan"]);

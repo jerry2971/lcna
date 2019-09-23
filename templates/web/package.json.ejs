@@ -4,11 +4,12 @@
   "scripts": {
     "start": "babel-node ./bin/www",
     "pro_start": "node ./bin/www",
+    "webpack": "webpack",
     "test": "jest --coverage",
     "build": "./build.sh"<% if(flow){ %>,
     "flow": "flow"<% } %><% if(eslint){ %>,
     "lint": "eslint",
-    "eslint": "eslint . --ignore-pattern build<% if(flow){ %> --ignore-pattern flow-typed<% } %>"<% } %>
+    "eslint": "eslint . --ignore-pattern build<% if(flow){ %> --ignore-pattern flow-typed<% } %> --ignore-pattern  public/app.js"<% } %>
   },
   "dependencies": {<% for(var i = 0; i < depen.length; ++i) {%>
     "<%=depen[i].pkg%>":"^<%=depen[i].version%>"<% if(i<depen.length-1){ %>,<% } %><% } %>
