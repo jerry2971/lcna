@@ -34,7 +34,7 @@ class Home extends React.Component<% if(flow){ %><Props, State><% } %> {
   }
   // ============== event ===============
   onSubmit = (event) => {
-    <% if(jwt){ %>jwtRequest<% } else { %>httpRequest<% } %>('GET', 'api/api', {}, (stateCode, resJson) => {
+    <% if(jwt){ %>jwtRequest<% } else { %>httpRequest<% } %>('POST', 'api/api', {}, (stateCode, resJson) => {
       const { value } = resJson;
       this.setState({ value });
     });
