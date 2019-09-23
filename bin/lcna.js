@@ -51,27 +51,27 @@ const dependence = {
 const questions = [{
 	type: 'input',
 	name: 'name',
-	message: 'Project Name',
+	message: 'Project Name:',
 	default: 'myapp'
 },{
 	type: 'list',
 	name: 'usage',
-	message: 'Template Usage',
+	message: 'Template Usage:',
 	choices:['app', 'express', 'web']
 },{
 	type: 'checkbox',
 	name: 'tool',
-	message: 'Tool',
+	message: 'Tool:',
 	choices:['flow', 'eslint']
 },{
 	type: 'checkbox',
 	name: 'log',
-	message: 'Log',
+	message: 'Log:',
 	choices:['winston', 'winston+rollbar']
 },{
 	type: 'checkbox',
 	name: 'ci',
-	message: 'CI',
+	message: 'CI:',
 	choices:['.gitlab-ci']
 }];
 
@@ -80,7 +80,7 @@ inquirer.prompt(questions).then((answers) => {
 		const questions2 = [{
 			type: 'confirm',
 			name: 'sRequest',
-			message: 'JSON Web Token (JWT)'
+			message: 'JSON Web Token (JWT):'
 		}];
 		inquirer.prompt(questions2).then((answers2) => {
 			main(Object.assign({}, answers, answers2));

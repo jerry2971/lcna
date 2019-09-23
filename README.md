@@ -1,6 +1,6 @@
 # Little Create Node App (lcna)
 
-Quick start your npm project. we support basic node app and express app.
+Quick start your npm project. We support basic node app, express app and web app.
 
 ## Installation 
 
@@ -17,9 +17,12 @@ Create the express app:
 
 ```bash
 $ lcna
-$ ? ProjectName myapp
-$ ? Usage express
-$ ? Tool flow, winston, jwt
+? Project Name: myapp
+? Template Usage: express
+? Tool: flow, eslint
+? Log: winston
+? CI: .gitlab-ci
+? JSON Web Token (JWT): No
 ```
 
 Install dependencies:
@@ -40,52 +43,32 @@ Build your project for deploy.
 $ npm run build
 ```
 
-## Quick Start With Node App
-
-The quickest way to get started with express.
-Just a few questions.
-
-Create the express app:
-
-```bash
-$ lcna
-$ ? ProjectName myapp
-$ ? Usage app
-$ ? Tool flow, winston
-```
-
-Install dependencies:
-
-```bash
-$ npm install
-```
-
-Start your node app.
-
-```bash
-$ npm start
-```
-
-Build your project for deploy.
-
-```bash
-$ npm run build
-```
 ## A Few Questions
 ```
-ProjectName:
+? Project Name:
   Your project name and used to create a folder
   
-Usage: app/express
+? Template Usage: app/express/web
   choose you want generator project
   
-tool: flow, winston, jwt
+? Tool: eslint, flow
   flow: static variable type check
+  eslint: Help you improve code quality
+
+? Log: winston, winston+rollbar
   winston: help you write log file
-  jwt: rest api stateless authentication
+  rollbar: rollbar log repository
+
+? CI: .gitlab-ci
+  .gitlab-ci: use gitlab ci
+
+? JSON Web Token (JWT): Yes/no
+  request way.
+
 ```
 
 ## Project Script
+
 ```
 "scripts": {
     "start": start your app on development environment
@@ -97,6 +80,7 @@ tool: flow, winston, jwt
     "eslint": eslint all file.
 }
 ```
+After build project. command `pro_start` will replace `start`
 ## License
 
 [MIT](LICENSE)

@@ -1,6 +1,6 @@
 {
   "name": "lcna",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "little create node app(lcna)",
   "bin": {
     "lcna": "./bin/lcna.js"
@@ -14,9 +14,11 @@
     "url": "https://github.com/jerry2971/lcna/issues"
   },
   "keywords": [
-    "express",
     "app",
-    "generator"
+    "express",
+    "generator",
+    "react",
+    "web"
   ],
   "scripts": {},
   "author": "jerrychen2971@gmail.com",
