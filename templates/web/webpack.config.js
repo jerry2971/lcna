@@ -1,4 +1,3 @@
-const webpack = require('webpack');
 const path = require('path');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 // https://github.com/johnagan/clean-webpack-plugin#options-and-defaults-optional

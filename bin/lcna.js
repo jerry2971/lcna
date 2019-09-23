@@ -124,6 +124,7 @@ const main = (args) => {
 				'clean-webpack-plugin',
 				'@babel/plugin-proposal-class-properties',
 				'@material-ui/core',
+				'react',
 				'react-dom',
 				'exports-loader',
 				'react-intl',

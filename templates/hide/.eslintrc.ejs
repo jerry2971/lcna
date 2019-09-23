@@ -16,5 +16,13 @@
     "comma-dangle": ["error", "never"],
     "no-unused-vars": ["error", { "args": "none" }],
     "no-console": 0
-  }
+  }<% if(devDepen.some((dev) => { return dev.pkg === 'react'})){ %>,
+  "overrides": [
+    {
+      "files": [ "src/*.js", "src/*.jsx" ],
+      "env": {
+        "browser": true
+      }
+    }
+  ]<% } %>
 }
