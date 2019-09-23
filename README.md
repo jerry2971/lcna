@@ -81,6 +81,14 @@ $ npm run build
 }
 ```
 After build project. command `pro_start` will replace `start`
+
+## Note
+You need add flow typed to resolve test file, if you use flow.
+
+```
+npm i --save-dev flow-typed
+./node_modules/.bin/flow-typed install jest
+```
 ## License
 
 [MIT](LICENSE)
