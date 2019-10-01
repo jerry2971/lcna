@@ -2,7 +2,8 @@
   "name": "<%=name%>",
   "version": "1.0.0",
   "scripts": {
-    "start": "babel-node ./bin/www",
+    "start": "webpack && babel-node ./bin/www",
+    "start_web": "webpack-dev-server",
     "webpack": "webpack",
     "test": "jest --coverage",
     "build": "./build.sh"<% if(flow){ %>,

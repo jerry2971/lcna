@@ -118,6 +118,7 @@ const main = (args) => {
 			devDepen = devDepen.concat([
 				'webpack',
 				'webpack-cli',
+				'webpack-dev-server',
 				'babel-loader',
 				'@babel/preset-react',
 				'@babel/preset-env',

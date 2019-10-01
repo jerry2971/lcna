@@ -16,5 +16,5 @@ node_modules/.bin/babel public -d build/public
 cd build
 npm install --production
 
-sed -i -e 's/babel-node .\/bin\/www/node .\/bin\/www/g' package.json
+sed -i -e 's/webpack && babel-node .\/bin\/www/node .\/bin\/www/g' package.json
 rm package.json-e
