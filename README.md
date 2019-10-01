@@ -71,8 +71,7 @@ $ npm run build
 
 ```
 "scripts": {
-    "start": start your app on development environment
-    "pro_start": start your app on production environment
+    "start": start your app
     "test": jest test
     "build": build project for deploy
     "flow": flow all file.
@@ -80,7 +79,6 @@ $ npm run build
     "eslint": eslint all file.
 }
 ```
-After build project. command `pro_start` will replace `start`
 
 ## Note
 You need add flow typed to resolve test file, if you use flow.
