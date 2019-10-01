@@ -10,6 +10,5 @@ node_modules/.bin/babel lib -d build/lib
 cd build
 npm install --production
 
-sed -i -e '/babel-node app.js/d' package.json
-sed -i -e 's/pro_start/start/g' package.json
+sed -i -e 's/babel-node app.js/node app.js/g' package.json
 rm package.json-e

@@ -14,6 +14,5 @@ node_modules/.bin/babel public -d build/public
 cd build
 npm install --production
 
-sed -i -e '/babel-node .\/bin\/www/d' package.json
-sed -i -e 's/pro_start/start/g' package.json
+sed -i -e 's/babel-node .\/bin\/www/node .\/bin\/www/g' package.json
 rm package.json-e
