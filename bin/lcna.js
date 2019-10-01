@@ -103,10 +103,8 @@ const main = (args) => {
 		ci: args.ci.includes('.gitlab-ci'),
 		jwt: !!args.sRequest
 	}
-	console.log(option);
 	Object.keys(dependence).forEach((key) => {
 		if (option[key]) {
-			console.log('key=', key);
 			depen = depen.concat(dependence[key].depen);
 			devDepen = devDepen.concat(dependence[key].devDepen);
 		}
@@ -172,8 +170,6 @@ function copyCheck(targetItem, option) {
 	let result = true;
 	Object.keys(dependence).forEach((key) => {
 		if (option[key] === false && dependence[key].file.some((f) => { return targetItem.includes(f); })) {
-			console.log('key:', key, 'targetItem', targetItem);
-			console.log('reject file:', targetItem);
 			result = false;
 		}
 	});
