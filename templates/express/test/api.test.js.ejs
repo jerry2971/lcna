@@ -56,12 +56,12 @@ describe('Test api request', () => {
   });
 <% if(jwt){ %>  test('Jwt must be provided', () => {
     return request(app).get('/api/api').then((response) => {
-      expect(response.statusCode).toBe(400);
+      expect(response.body.status).toBe(false);
     });
   });
   test('Jwt must be provided', () => {
     return request(app).post('/api/api').then((response) => {
-      expect(response.statusCode).toBe(400);
+      expect(response.body.status).toBe(false);
     });
   });
 <% } %>});

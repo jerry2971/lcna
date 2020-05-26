@@ -14,16 +14,7 @@ const style = (theme) => {
       '&:hover': {
         backgroundColor: '#e2e7e8'
       }
-    },
-    inputLabelField: {
-      color: '#219CA5',
-      '&$fieldFocused': { color: '#219CA5' }
-    },
-    inputField: {
-      color: '#4F5051',
-      '&$fieldFocused': { color: '#4F5051' }
-    },
-    fieldFocused: {}
+    }
   };
 };
 

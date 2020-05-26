@@ -10,22 +10,16 @@ const jwtSign = (body<% if(flow){ %>: any<% } %>) => {
   return jwt.sign(body, SECRET, option);
 };
 
-const jwtVerify = (token<% if(flow){ %>: string<% } %>, callback<% if(flow){ %>: Function<% } %>) => {
+const jwtVerify = (token<% if(flow){ %>: string<% } %>, callback<% if(flow){ %>: (err: {
+  name: string,
+  message: string,
+  expiredAt: number
+}, decoded: any) => void<% } %>) => {
   jwt.verify(token, SECRET, callback);
-  /* **************************
-  (err, decoded) => {
-    if(err){
-      console.log(err.name + ':' + err.message);
-      winston.log('info', {title: TITLE, msg: err.name + ':' + err.message});
-      res.status(400).json({msg: err.message});
-    }
-    console.log(decoded);
-    winston.log('debug', {title: TITLE, msg: decoded});
-  }
-  *************************** */
 };
 
 module.exports = {
   jwtSign,
   jwtVerify
 };
+  

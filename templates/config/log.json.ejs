@@ -15,7 +15,7 @@
       "json": false,
       "colorize": true
     }
-  },
+  }<%if (rollbar) {%>,
   "rollbar_option": {
     "level": "error",
     "rollbarConfig": {
@@ -25,5 +25,5 @@
         "fingerprint": "main_info"
       }
     }
-  }
+  }<%}%>
 }
