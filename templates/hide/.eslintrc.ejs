@@ -28,17 +28,14 @@
     ],
     "rules": {
       "no-var": "error",
-      "semi": [2, "always"],
-      "quotes": [2, "single"],
+      "semi": ["error", "always"],
+      "quotes": ["error", "single"],
       "arrow-body-style": ["error", "always"],
       "comma-dangle": ["error", "never"],
       "no-unused-vars": ["error", { "args": "none" }],
-      "no-console": 0,
-      "import/no-extraneous-dependencies": ["error", {
-        "devDependencies": true,
-        "optionalDependencies": true,
-        "peerDependencies": true
-      }]
+      "no-console": "warn",
+      "max-len": "off",
+      "import/no-extraneous-dependencies": "off"
     },
       "env": {
         "browser": true
