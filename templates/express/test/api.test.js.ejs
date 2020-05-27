@@ -1,7 +1,7 @@
 <% if(flow){ %>// @flow
 <% } %>const request = require('supertest');
-const app = require('./../app');
-<% if(jwt){ %>const { jwtSign, jwtVerify } = require('./../lib/jwt');
+const app = require('../app');
+<% if(jwt){ %>const { jwtSign, jwtVerify } = require('../lib/jwt');
 <% } %>
 const Input = {
   user: 'user',

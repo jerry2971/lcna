@@ -1,7 +1,7 @@
 <% if(flow){ %>// @flow
 <% } %>const express = require('express');
-<% if(winston){ %>const winston = require('./../lib/winston');
-<% } %>const { jwtSign } = require('./../lib/jwt');
+<% if(winston){ %>const winston = require('../lib/winston');
+<% } %>const { jwtSign } = require('../lib/jwt');
 
 const router = express.Router();
 <% if(winston){ %>const TITLE = 'JWT_MSG';

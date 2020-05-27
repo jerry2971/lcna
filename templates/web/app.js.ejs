@@ -11,14 +11,14 @@ const winston = require('./lib/winston');
 <% } -%>
 
 const app = express();
-<% if (winston) { -%>const TITLE = 'APP_MSG';
+<% if (winston) { -%>// const TITLE = 'APP_MSG';
 <% } -%>
 
 // queue
 app.use(queue({ activeLimit: 5, queuedLimit: -1 }));
 
 // security header
-app.use();
+app.use(helmet());
 
 // log
 app.use(morgan('combined'<% if (winston) { %>, { stream: winston.stream }<% } %>));

@@ -16,7 +16,7 @@ import <% if(jwt){ %>{ jwtRequest }<% } else { %>{ httpRequest }<% } %> from './
 <% if(flow){ %>
 type Props = {
   intl: any,
-  classes : any
+  classes: any
 };
 
 type State = {
@@ -27,11 +27,13 @@ class Home extends React.Component<% if(flow){ %><Props, State><% } %> {
   state = {
     value: ''
   }
+
   // ============= function =============
   formatLanguage = (obj, formate) => {
     const { intl } = this.props;
     return intl.formatMessage(obj, formate);
   }
+
   // ============== event ===============
   onSubmit = (event) => {
     <% if(jwt){ %>jwtRequest<% } else { %>httpRequest<% } %>('POST', 'api/api', {}, (stateCode, resJson) => {
@@ -39,6 +41,7 @@ class Home extends React.Component<% if(flow){ %><Props, State><% } %> {
       this.setState({ value });
     });
   }
+
   render() {
     const { classes } = this.props;
     return (
