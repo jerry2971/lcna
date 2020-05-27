@@ -17,4 +17,4 @@ cd build
 npm install --production
 
 sed -i -e 's/webpack && babel-node .\/bin\/www/node .\/bin\/www/g' package.json
-rm package.json-e
+[ -e package.json-e ] && rm package.json-e

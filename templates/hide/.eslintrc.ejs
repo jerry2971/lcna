@@ -20,6 +20,23 @@
   "overrides": [
     {
       "files": [ "src/*.js", "src/*.jsx" ],
+      "extends": [
+      "airbnb-base",
+      "eslint:recommended",<% if(flow){ %>
+      "plugin:flowtype/recommended",<% } %>
+      "plugin:react/recommended"
+    ],
+    "rules": {
+      "no-var": "error",
+      "semi": ["error", "always"],
+      "quotes": ["error", "single"],
+      "arrow-body-style": ["error", "always"],
+      "comma-dangle": ["error", "never"],
+      "no-unused-vars": ["error", { "args": "none" }],
+      "no-console": "warn",
+      "max-len": "off",
+      "import/no-extraneous-dependencies": "off"
+    },
       "env": {
         "browser": true
       }

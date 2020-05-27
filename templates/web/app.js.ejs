@@ -4,25 +4,24 @@ const cookieParser = require('cookie-parser');
 const morgan = require('morgan');
 const queue = require('express-queue');
 const helmet = require('helmet');
-
-const app = express();
 <% if (jwt) { -%>
 const { jwtVerify } = require('./lib/jwt');
 <% } -%><% if (winston) { -%>
 const winston = require('./lib/winston');
-<% if (jwt) { -%>
+<% } -%>
 
-const TITLE = 'APP_MSG';<% } -%>
+const app = express();
+<% if (winston) { -%>// const TITLE = 'APP_MSG';
 <% } -%>
 
 // queue
 app.use(queue({ activeLimit: 5, queuedLimit: -1 }));
 
 // security header
-app.use(helmet({ frameguard: false }));
+app.use(helmet());
 
 // log
-app.use(morgan('combined'<% if (winston) { -%>, { stream: winston.stream }<% } -%>));
+app.use(morgan('combined'<% if (winston) { %>, { stream: winston.stream }<% } %>));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -30,7 +29,8 @@ app.use(cookieParser());
 
 // public file
 app.use(express.static(path.join(__dirname, 'public')));
-<% if (jwt) { -%>
+<% if (jwt) { %>
+
 // jwt server
 app.use('/jwt', require('./routes/jwt'));
 
@@ -38,16 +38,19 @@ app.use('/jwt', require('./routes/jwt'));
 app.all('/api/*', (req, res, next) => {
   jwtVerify(req.body.token, (err, decoded) => {
     if (err) {
-<% if (winston) { -%>      winston.log('info', { title: TITLE, msg: err.name.concat(':', err.message) });
-<% } -%>      res.status(400).json({ msg: err.message });
+      <% if (winston) { %>winston.log('info', { title: TITLE, msg: err.name.concat(':', err.message) });
+<% } else { %>console.log({ status: false, msg: err.message });
+<% } %>
+      res.status(200).json({ status: false, msg: err.message });
       return;
     }
-<% if (winston) { -%>    winston.log('debug', { title: TITLE, msg: decoded });
+<% if (winston) { %>    winston.log('debug', { title: TITLE, decoded });
 <% } -%>    req.body = decoded;
     next();
   });
 });
 <% } -%>
+
 // api routers
 app.use('/api/api', require('./routes/api'));
 
@@ -59,9 +62,7 @@ app.use((err, req, res, next) => {
 <% if(winston){%>  // add this line to include winston logging
   winston.error();
 <% } %>
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
+  res.status(err.status || 500).json({ status: false, msg: 'error' });
 });
 
 module.exports = app;

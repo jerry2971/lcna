@@ -1,7 +1,7 @@
 <% if(flow){ %>// @flow
 <% } %>const request = require('supertest');
-const app = require('./../app');
-<% if(jwt){ %>const { jwtSign, jwtVerify } = require('./../lib/jwt');
+const app = require('../app');
+<% if(jwt){ %>const { jwtSign, jwtVerify } = require('../lib/jwt');
 <% } %>
 const Input = {
   user: 'user',
@@ -49,19 +49,19 @@ describe('Test api request', () => {
       expect(response.statusCode).toBe(200);
     });
   });
-  test('It should response 404', () => {
+  test('It should response the POST method', () => {
     return request(app).post('/api/api').send(<% if(jwt){ %>{ token: TOKEN }<% }else{ %>Input<% } %>).then((response) => {
-      expect(response.statusCode).toBe(404);
+      expect(response.statusCode).toBe(200);
     });
   });
 <% if(jwt){ %>  test('Jwt must be provided', () => {
     return request(app).get('/api/api').then((response) => {
-      expect(response.statusCode).toBe(400);
+      expect(response.body.status).toBe(false);
     });
   });
   test('Jwt must be provided', () => {
     return request(app).post('/api/api').then((response) => {
-      expect(response.statusCode).toBe(400);
+      expect(response.body.status).toBe(false);
     });
   });
 <% } %>});

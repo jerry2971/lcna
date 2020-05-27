@@ -1,19 +1,18 @@
 <% if(flow){ %>// @flow
 <% } %>const express = require('express');
-<% if(winston){ %>const winston = require('./../lib/winston');
+<% if(winston){ %>const winston = require('../lib/winston');
 <% } %>
 const router = express.Router();
 <% if(winston){ %>const TITLE = 'API_MSG';
 <% } %>
-// (req, res, next) => {}
 router.get('/', (req, res) => {<% if(winston){ %>
-  winston.log('info', { title: TITLE, msg: 'get success' });<% } %>
-  console.log('get success');
-  res.status(200).json({ msg: 'get success', value: 'Hello, World!' });
+  winston.log('info', { title: TITLE, msg: 'get success' });<% } else { %>
+  console.log('get success');<% } %>
+  res.status(200).json({ status: true, msg: 'get success', value: 'Hello, World!' });
 }).post('/', (req, res) => {<% if(winston){ %>
-  winston.log('info', { title: TITLE, msg: 'get success' });<% } %>
-  console.log('get success');
-  res.status(200).json({ msg: 'post success', value: 'Hello, World!' });
+  winston.log('info', { title: TITLE, msg: 'get success' });<% } else { %>
+  console.log('get success');<% } %>
+  res.status(200).json({ status: true, msg: 'post success', value: 'Hello, World!' });
 });
 
 module.exports = router;

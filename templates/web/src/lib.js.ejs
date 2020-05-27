@@ -1,5 +1,5 @@
 <% if(flow){ %>// @flow
-<% } %>const httpRequest = (method<% if(flow){ %>: string<% } %>, src<% if(flow){ %>: string<% } %>, jsonBody<% if(flow){ %>: any<% } %>, callback<% if(flow){ %>: any<% } %>) => {
+<% } %>const httpRequest = (method<% if(flow){ %>: string<% } %>, src<% if(flow){ %>: string<% } %>, jsonBody<% if(flow){ %>: any<% } %>, callback<% if(flow){ %>: (statusCode: number, response: any) => void<% } %>) => {
   const request = new XMLHttpRequest();
   request.open(method, src);
   request.setRequestHeader('Content-Type', 'application/json');
@@ -10,7 +10,7 @@
   };
 };
 <% if(jwt){ %>
-const jwtRequest = (method<% if(flow){ %>: string<% } %>, src<% if(flow){ %>: string<% } %>, jsonBody<% if(flow){ %>: any<% } %>, callback<% if(flow){ %>: any<% } %>) => {
+const jwtRequest = (method<% if(flow){ %>: string<% } %>, src<% if(flow){ %>: string<% } %>, jsonBody<% if(flow){ %>: any<% } %>, callback<% if(flow){ %>: (statusCode: number, response: any) => void<% } %>) => {
   httpRequest('POST', 'jwt', jsonBody, (status, signBody) => {
     httpRequest(method, src, signBody, callback);
   });
