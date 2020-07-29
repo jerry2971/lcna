@@ -1,6 +1,6 @@
 {
   "name": "lcna",
-  "version": "1.0.5",
+  "version": "1.0.7",
   "description": "little create node app(lcna)",
   "bin": {
     "lcna": "./bin/lcna.js"
@@ -24,9 +24,9 @@
   "author": "jerrychen2971@gmail.com",
   "license": "MIT",
   "dependencies": {
-    "ejs": "^2.6.2",
-    "inquirer": "^6.4.1",
+    "ejs": "^2.7.4",
+    "inquirer": "^6.5.2",
     "latest-version": "^5.1.0",
-    "mkdirp": "^0.5.1"
+    "mkdirp": "^0.5.5"
   }
 }
